@@ -1,6 +1,6 @@
 {
   "name": "@clusic/catch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The `try catch` block of clusic",
   "repository": {
     "type": "git",
