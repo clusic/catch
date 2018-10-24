@@ -17,6 +17,7 @@ module.exports = async app => {
         message: error.message
       };
       ctx.status = 200;
+      ctx.app.Logger.error(error);
     })
   });
 };
