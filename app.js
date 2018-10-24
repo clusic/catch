@@ -4,8 +4,12 @@ module.exports = async app => {
   app.MakeCatch = MakeCatch;
   app.use(async (ctx, next) => {
     await MakeCatch(async roll => {
-      ctx.Rollback = roll;
-      ctx.error = MakeError;
+      defineReactive(ctx, 'Rollback', roll);
+      defineReactive(ctx, 'error', MakeError);
+      defineReactive(ctx, 'sendResult', (data, status) => {
+        ctx.body = { status: status || 200, data };
+        ctx.status = 200;
+      });
       await next();
     }, error => {
       ctx.body = {
@@ -16,3 +20,11 @@ module.exports = async app => {
     })
   });
 };
+
+function defineReactive(ctx, name, target) {
+  Object.defineProperty(ctx, name, {
+    get() {
+      return target;
+    }
+  })
+}
